@@ -38,7 +38,37 @@ class Solution
         
         return ans[N][W];
     }
+
+    //SC : Optimised 
+
+    int knapSack(int W, int wt[], int val[], int n) 
+    { 
+       // Your code here
+       
+       vector<int>ans(W+1,0);
+       vector<int>temp(W+1);
+       
+       for(int i=1;i<=n;i++)
+       {
+           temp[0] = 0;
+           for(int j=1;j<=W;j++)
+           {
+               temp[j] = ans[j];
+               
+               if(j >= wt[i-1])
+                {
+                    temp[j] = max(temp[j],val[i-1]+ans[j-wt[i-1]]);
+                }
+           }
+           ans = temp;
+       }
+       
+       return ans[W];
+    }
 };
+
+
+
 
 //{ Driver Code Starts.
 
