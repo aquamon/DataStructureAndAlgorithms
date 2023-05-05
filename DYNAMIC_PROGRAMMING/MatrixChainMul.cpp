@@ -63,3 +63,48 @@ public:
         return solve(0,N-2,row,col,N-1,ans);
     }
 };
+
+// Bottom Top
+
+class Solution{
+public:
+
+    int solve(int row[],int col[],int N,vector<vector<int>>&ans)
+    {
+        for(int i= 0; i<N;i++)
+            ans[i][i] = 0;
+        
+        for(int d=1;d<N;d++)
+        {
+            int i=0,j=d;
+            
+            while(i<N and j<N)
+            {
+                ans[i][j] = INT_MAX;
+                
+                for(int k=i;k<j;k++)
+                {
+                    ans[i][j] = min(ans[i][j], ans[i][k] + ans[k+1][j] + row[i]*col[k]*col[j]);
+                }
+                i++;j++;
+            }
+        }
+        return ans[0][N-1];
+    }
+    int matrixMultiplication(int N, int arr[])
+    {
+        // code here
+        
+        int row[N-1];
+        int col[N-1];
+        
+        vector<vector<int>>ans(N-1,vector<int>(N-1,-1));
+        for(int i=0;i<N-1;i++)
+        {
+            row[i] = arr[i];
+            col[i] = arr[i+1];
+        }
+        
+        return solve(row,col,N-1,ans);
+    }
+};
